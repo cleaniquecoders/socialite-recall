@@ -50,8 +50,12 @@ class SocialiteController extends Controller
         return redirect()->intended(config('socialite-recall.providers.redirect_after_login', '/'));
     }
 
-    public function logout(Request $request, string $provider)
+    public function logout(Request $request)
     {
+        $user = Auth::user();
+
+        $provider = $user->provider;
+
         if (! in_array($provider, config('socialite-recall.providers', []))) {
             abort(404, 'Provider not supported.');
         }

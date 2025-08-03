@@ -10,7 +10,7 @@ Route::prefix('auth')->group(function () {
     Route::get('{provider}/callback', [SocialiteController::class, 'callback'])
         ->name('socialite.callback');
 
-    Route::post('{provider}/logout', [SocialiteController::class, 'logout'])
+    Route::post('logout', [SocialiteController::class, 'logout'])
         ->middleware('auth')
         ->name('socialite.logout');
 });

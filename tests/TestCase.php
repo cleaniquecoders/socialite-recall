@@ -4,8 +4,10 @@ namespace CleaniqueCoders\SocialiteRecall\Tests;
 
 use CleaniqueCoders\SocialiteRecall\SocialiteRecallServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Orchestra\Testbench\Attributes\WithMigration;
 use Orchestra\Testbench\TestCase as Orchestra;
 
+#[WithMigration]
 class TestCase extends Orchestra
 {
     protected function setUp(): void
@@ -13,7 +15,9 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'CleaniqueCoders\\SocialiteRecall\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            function (string $modelName) {
+                return 'Workbench\\Database\\Factories\\'.class_basename($modelName).'Factory';
+            }
         );
     }
 
@@ -27,11 +31,8 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
-
-        /*
-         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/database/migrations') as $migration) {
-            (include $migration->getRealPath())->up();
-         }
-         */
+        config()->set('socialite-recall.providers', ['github']);
+        config()->set('socialite-recall.model', \Workbench\App\Models\User::class);
+        config()->set('auth.providers.users.model', \Workbench\App\Models\User::class);
     }
 }
