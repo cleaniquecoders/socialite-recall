@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace CleaniqueCoders\SocialiteRecall;
 
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class SocialiteRecallServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -16,10 +16,11 @@ class SkeletonServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('skeleton')
+            ->name('socialite-recall')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_migration_table_name_table')
-            ->hasCommand(SkeletonCommand::class);
+            ->hasRoute('web')
+            ->hasInstallCommand(function (InstallCommand $command) {
+                $command->publishConfigFile();
+            });
     }
 }
