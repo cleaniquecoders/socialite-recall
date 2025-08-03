@@ -10,3 +10,8 @@ parameters:
     tmpDir: build/phpstan
     checkOctaneCompatibility: true
     checkModelProperties: true
+
+    ignoreErrors:
+        - '#Class App\\Models\\User not found#'
+        - '#Access to an undefined property Workbench\\App\\Models\\User::\$provider#'
+        - '#Call to an undefined method Laravel\\Socialite\\Contracts\\Provider::getLogoutUrl\(\)#'
