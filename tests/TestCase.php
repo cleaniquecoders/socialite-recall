@@ -6,6 +6,7 @@ use CleaniqueCoders\SocialiteRecall\SocialiteRecallServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\Attributes\WithMigration;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Workbench\App\Models\User;
 
 #[WithMigration]
 class TestCase extends Orchestra
@@ -32,7 +33,7 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
         config()->set('socialite-recall.providers', ['github']);
-        config()->set('socialite-recall.model', \Workbench\App\Models\User::class);
-        config()->set('auth.providers.users.model', \Workbench\App\Models\User::class);
+        config()->set('socialite-recall.model', User::class);
+        config()->set('auth.providers.users.model', User::class);
     }
 }

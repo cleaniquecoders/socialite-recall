@@ -1,6 +1,8 @@
 <?php
 
+use CleaniqueCoders\SocialiteRecall\Http\Controllers\SocialiteController;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -40,11 +42,11 @@ beforeEach(function () {
     });
 
     // Ensure routes are available
-    Route::get('/auth/{provider}/redirect', [\CleaniqueCoders\SocialiteRecall\Http\Controllers\SocialiteController::class, 'redirect'])
+    Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirect'])
         ->name('socialite.redirect');
-    Route::get('/auth/{provider}/callback', [\CleaniqueCoders\SocialiteRecall\Http\Controllers\SocialiteController::class, 'callback'])
+    Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])
         ->name('socialite.callback');
-    Route::post('/auth/logout', [\CleaniqueCoders\SocialiteRecall\Http\Controllers\SocialiteController::class, 'logout'])
+    Route::post('/auth/logout', [SocialiteController::class, 'logout'])
         ->name('socialite.logout');
 });
 
@@ -62,7 +64,7 @@ it('handles provider callback and logs in user', function () {
 })->skip('Need to mock redirection success?');
 
 it('can logout user', function () {
-    $user = new class extends \Illuminate\Foundation\Auth\User
+    $user = new class extends User
     {
         protected $table = 'users';
 
