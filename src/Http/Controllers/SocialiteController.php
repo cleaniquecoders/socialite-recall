@@ -33,17 +33,23 @@ class SocialiteController extends Controller
         }
 
         $userModel = config('socialite-recall.providers.model');
+        // should user has many oauth_providers
+        // oauth_providers -> id, uuid, type, identifier
+
         $user = $userModel::updateOrCreate(
             [
                 'email' => $socialiteUser->getEmail(),
-                'provider' => $provider,
-                'provider_id' => $socialiteUser->getId(),
             ],
             [
                 'name' => $socialiteUser->getName() ?? $socialiteUser->getNickname(),
                 'avatar' => $socialiteUser->getAvatar(),
             ]
         );
+
+        // $user->provider()->updateOrCreate([
+        //     'oauth_provider' => $provider,
+        //     'oauth_id' => $socialiteUser->getId(),
+        // ]);
 
         Auth::login($user, true);
 
